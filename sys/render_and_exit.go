@@ -5,7 +5,7 @@ import (
 	"flag"
 	"os"
 
-	. "github.com/ljanyst/ghostscad/shape"
+	. "github.com/ljanyst/ghostscad/primitive"
 	log "github.com/sirupsen/logrus"
 	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 )

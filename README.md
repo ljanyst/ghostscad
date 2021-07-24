@@ -19,7 +19,7 @@ file:
 package main
 
 import (
-	. "github.com/ljanyst/ghostscad/shape"
+	. "github.com/ljanyst/ghostscad/primitive"
 	"github.com/ljanyst/ghostscad/sys"
 )
 
