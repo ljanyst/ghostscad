@@ -5,16 +5,16 @@ import (
 	"fmt"
 )
 
-type SphereNode struct {
+type Sphere struct {
 	Radius float64
 }
 
-func Sphere(radius float64) *SphereNode {
-	return &SphereNode{
+func NewSphere(radius float64) *Sphere {
+	return &Sphere{
 		Radius: radius,
 	}
 }
 
-func (o *SphereNode) Render(w *bufio.Writer) {
+func (o *Sphere) Render(w *bufio.Writer) {
 	w.WriteString(fmt.Sprintf("sphere(r=%f);\n", o.Radius))
 }
