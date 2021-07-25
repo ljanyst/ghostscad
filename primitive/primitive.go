@@ -1,9 +1,9 @@
-package shape
+package primitive
 
 import (
 	"bufio"
 )
 
-type Shape interface {
+type Primitive interface {
 	Render(w *bufio.Writer)
 }

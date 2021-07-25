@@ -10,7 +10,7 @@ import (
 	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 )
 
-func RenderAndExit(shape Shape) {
+func RenderAndExit(shape Primitive) {
 	out := flag.String("out", "out.scad", "output OpenSCAD file")
 	logFile := flag.String("log-file", "", "output file for diagnostics")
 	logLevel := flag.String("log-level", "Info", "verbosity of the diagnostic information")

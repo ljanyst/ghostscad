@@ -1,4 +1,4 @@
-package shape
+package primitive
 
 import (
 	"bufio"
