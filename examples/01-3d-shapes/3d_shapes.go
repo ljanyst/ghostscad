@@ -18,6 +18,10 @@ func buildShapes() Primitive {
 			Vec3{40, 0, 0},
 			NewImport("die.stl"),
 		),
+		NewTranslation(
+			Vec3{60, 0, 0},
+			NewCylinder(10, 3).SetRBottom(5),
+		),
 	)
 }
 
