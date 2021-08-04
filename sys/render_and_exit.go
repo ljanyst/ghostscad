@@ -50,6 +50,7 @@ func RenderAndExit(shape Primitive) {
 	}
 
 	writer := bufio.NewWriter(f)
+	renderGlobals(writer)
 	shape.Render(writer)
 	writer.Flush()
 }
