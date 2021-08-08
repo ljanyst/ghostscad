@@ -56,9 +56,16 @@ func newEmptyTriangle() Primitive {
 	)
 }
 
+func newWave() Primitive {
+	sv := 0.2173
+	return NewScale(
+		Vec3{sv, sv, sv},
+		NewSurface("wave.dat").SetConvexity(5))
+}
+
 func buildShapes() Primitive {
 	return NewTranslation(
-		Vec3{-40, 0, 0},
+		Vec3{-50, 0, 0},
 		NewSphere(5).SetFs(1).SetFn(0),
 		NewTranslation(
 			Vec3{20, 0, 0},
@@ -75,6 +82,10 @@ func buildShapes() Primitive {
 		NewTranslation(
 			Vec3{80, 0, 0},
 			newEmptyTriangle(),
+		),
+		NewTranslation(
+			Vec3{100, 0, 0},
+			newWave(),
 		),
 	)
 }
