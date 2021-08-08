@@ -8,11 +8,20 @@ import (
 type Sphere struct {
 	Radius float64
 	Circular
+	name string
 }
 
 func NewSphere(radius float64) *Sphere {
 	return &Sphere{
 		Radius: radius,
+		name:   "sphere",
+	}
+}
+
+func NewCircle(radius float64) *Sphere {
+	return &Sphere{
+		Radius: radius,
+		name:   "circle",
 	}
 }
 
@@ -33,7 +42,8 @@ func (o *Sphere) SetFn(val uint16) *Sphere {
 
 func (o *Sphere) Render(w *bufio.Writer) {
 
-	w.WriteString(fmt.Sprintf("sphere(r=%f%s);\n",
+	w.WriteString(fmt.Sprintf("%s(r=%f%s);\n",
+		o.name,
 		o.Radius,
 		o.Circular.String(),
 	))
