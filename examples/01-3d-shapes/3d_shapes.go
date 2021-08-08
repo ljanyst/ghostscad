@@ -59,7 +59,7 @@ func newEmptyTriangle() Primitive {
 func buildShapes() Primitive {
 	return NewTranslation(
 		Vec3{-40, 0, 0},
-		NewSphere(5),
+		NewSphere(5).SetFs(1).SetFn(0),
 		NewTranslation(
 			Vec3{20, 0, 0},
 			NewCube(Vec3{10, 10, 10}),

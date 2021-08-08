@@ -10,6 +10,7 @@ type Cylinder struct {
 	RTop    float64
 	RBottom float64
 	Center  bool
+	Circular
 }
 
 func NewCylinder(h, r float64) *Cylinder {
@@ -31,8 +32,26 @@ func (o *Cylinder) SetRBottom(rBottom float64) *Cylinder {
 	return o
 }
 
+func (o *Cylinder) SetFa(val float64) *Cylinder {
+	o.Circular.SetFa(val)
+	return o
+}
+
+func (o *Cylinder) SetFs(val float64) *Cylinder {
+	o.Circular.SetFs(val)
+	return o
+}
+
+func (o *Cylinder) SetFn(val uint16) *Cylinder {
+	o.Circular.SetFn(val)
+	return o
+}
+
 func (o *Cylinder) Render(w *bufio.Writer) {
 	w.WriteString(
-		fmt.Sprintf("cylinder(h=%f, r1=%f, r2=%f, center=%t);\n", o.H, o.RBottom, o.RTop, o.Center),
+		fmt.Sprintf(
+			"cylinder(h=%f, r1=%f, r2=%f, center=%t%s);\n",
+			o.H, o.RBottom, o.RTop, o.Center, o.Circular.String(),
+		),
 	)
 }
