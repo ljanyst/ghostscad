@@ -12,7 +12,7 @@ import (
 
 type Scale struct {
 	Scale Vec3
-	Items *List
+	Items *List "forward:Add"
 }
 
 func NewScale(scale Vec3, items ...Primitive) *Scale {
@@ -20,11 +20,6 @@ func NewScale(scale Vec3, items ...Primitive) *Scale {
 		Scale: scale,
 		Items: NewList(items...),
 	}
-}
-
-func (o *Scale) Add(items ...Primitive) *Scale {
-	o.Items.Add(items...)
-	return o
 }
 
 func (o *Scale) Render(w *bufio.Writer) {

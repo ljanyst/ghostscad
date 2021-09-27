@@ -9,42 +9,28 @@ import (
 )
 
 type Sphere struct {
-	Radius float64
-	Circular
-	name string
+	Radius   float64
+	Circular *Circular "forward:SetFa,SetFs,SetFn"
+	name     string
 }
 
 func NewSphere(radius float64) *Sphere {
 	return &Sphere{
-		Radius: radius,
-		name:   "sphere",
+		Radius:   radius,
+		Circular: &Circular{},
+		name:     "sphere",
 	}
 }
 
 func NewCircle(radius float64) *Sphere {
 	return &Sphere{
-		Radius: radius,
-		name:   "circle",
+		Radius:   radius,
+		Circular: &Circular{},
+		name:     "circle",
 	}
 }
 
-func (o *Sphere) SetFa(val float64) *Sphere {
-	o.Circular.SetFa(val)
-	return o
-}
-
-func (o *Sphere) SetFs(val float64) *Sphere {
-	o.Circular.SetFs(val)
-	return o
-}
-
-func (o *Sphere) SetFn(val uint16) *Sphere {
-	o.Circular.SetFn(val)
-	return o
-}
-
 func (o *Sphere) Render(w *bufio.Writer) {
-
 	w.WriteString(fmt.Sprintf("%s(r=%f%s);\n",
 		o.name,
 		o.Radius,

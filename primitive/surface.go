@@ -10,9 +10,9 @@ import (
 
 type Surface struct {
 	File      string
-	Center    bool
-	Invert    bool
-	Convexity int
+	Center    bool "optional"
+	Invert    bool "optional"
+	Convexity int  "optional"
 }
 
 func NewSurface(file string) *Surface {
@@ -22,21 +22,6 @@ func NewSurface(file string) *Surface {
 		Invert:    false,
 		Convexity: 0,
 	}
-}
-
-func (o *Surface) SetCenter(center bool) *Surface {
-	o.Center = center
-	return o
-}
-
-func (o *Surface) SetInvert(invert bool) *Surface {
-	o.Invert = invert
-	return o
-}
-
-func (o *Surface) SetConvexity(convexity int) *Surface {
-	o.Convexity = convexity
-	return o
 }
 
 func (o *Surface) Render(w *bufio.Writer) {

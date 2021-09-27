@@ -10,8 +10,8 @@ import (
 
 type Import struct {
 	File      string
-	Convexity int
-	Layer     string
+	Convexity int    "optional"
+	Layer     string "optional"
 }
 
 func NewImport(file string) *Import {
@@ -20,16 +20,6 @@ func NewImport(file string) *Import {
 		Convexity: 0,
 		Layer:     "",
 	}
-}
-
-func (o *Import) SetConvexity(convexity int) *Import {
-	o.Convexity = convexity
-	return o
-}
-
-func (o *Import) SetLayer(layer string) *Import {
-	o.Layer = layer
-	return o
 }
 
 func (o *Import) Render(w *bufio.Writer) {

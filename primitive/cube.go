@@ -12,7 +12,7 @@ import (
 
 type Cube struct {
 	Dims   Vec3
-	Center bool
+	Center bool "optional"
 }
 
 func NewCube(dims Vec3) *Cube {
@@ -20,11 +20,6 @@ func NewCube(dims Vec3) *Cube {
 		Dims:   dims,
 		Center: true,
 	}
-}
-
-func (o *Cube) SetCenter(center bool) *Cube {
-	o.Center = center
-	return o
 }
 
 func (o *Cube) Render(w *bufio.Writer) {
