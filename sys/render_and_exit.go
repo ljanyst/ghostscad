@@ -1,3 +1,6 @@
+// Copyright 2021 Lukasz Janyst <lukasz@jany.st>
+// Licensed under the MIT license, see the LICENSE file for details.
+
 package sys
 
 import (
