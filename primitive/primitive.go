@@ -3,7 +3,7 @@
 
 package primitive
 
-//go:generate go run github.com/ljanyst/ghostscad/util/tagged_method_generator -types Cube,Cylinder,Import,LinearExtrusion,Scale,Sphere,Surface
+//go:generate go run github.com/ljanyst/ghostscad/util/tagged_method_generator
 
 import (
 	"bufio"
