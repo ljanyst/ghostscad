@@ -27,8 +27,6 @@ import (
 var codeTemplate = `
 // Do not edit. Automatically generated on {{ .Timestamp }}.
 
-{{ $type := .TypeName }}
-
 package {{ .PackageName }}
 
 import (
@@ -37,18 +35,22 @@ import (
 {{ end }}
 )
 
-{{ range $i, $opt := .Optionals }}
+{{ range $type, $optionals := .Optionals }}
+{{ range $i, $opt := $optionals }}
 func (o *{{ $type }}) Set{{ $opt.FieldName }}(val {{ $opt.Type }}) *{{ $type }} {
   o.{{ $opt.FieldName }} = val
   return o
 }
 {{ end }}
+{{ end }}
 
-{{ range $i, $forward := .Forwards }}
+{{ range $type, $forwards := .Forwards }}
+{{ range $i, $forward := $forwards }}
 func (o *{{ $type }}) {{ $forward.MethodName }}{{ $forward.Signature }} *{{ $type }} {
   o.{{ $forward.FieldName }}.{{ $forward.MethodName }}({{ $forward.VariableList }})
   return o
 }
+{{ end }}
 {{ end }}
 `
 
@@ -66,9 +68,8 @@ type Forward struct {
 
 type TemplateParams struct {
 	PackageName string
-	TypeName    string
-	Optionals   []Optional
-	Forwards    []Forward
+	Optionals   map[string][]Optional
+	Forwards    map[string][]Forward
 	Timestamp   string
 	Qualifiers  map[string]string
 }
@@ -98,6 +99,14 @@ func (g *Generator) ParseCurrentPackage() error {
 	}
 
 	g.Params.PackageName = pkg.Name
+	g.Params.Timestamp = time.Now().Format(time.UnixDate)
+	g.Params.Optionals = make(map[string][]Optional)
+	g.Params.Forwards = make(map[string][]Forward)
+
+	// Initialize the map of qualifiers for parameter types, we generate them at random
+	// for each package path to avoid conflicts
+	g.Params.Qualifiers = make(map[string]string)
+
 	g.ParsedFiles = make(map[string]*ast.File)
 	g.Types = make(map[*ast.Ident]types.Object)
 	parsedFiles := []*ast.File{}
@@ -164,7 +173,7 @@ QualifierGen:
 	return ""
 }
 
-func (g *Generator) processOptional(field *ast.Field) error {
+func (g *Generator) processOptional(typeName string, field *ast.Field) error {
 	optional := Optional{
 		FieldName: field.Names[0].Name,
 	}
@@ -172,21 +181,21 @@ func (g *Generator) processOptional(field *ast.Field) error {
 	typ, ok := g.Types[field.Names[0]]
 	if !ok {
 		return fmt.Errorf("Cannot resolve type of field %s of %s.%s",
-			optional.FieldName, g.Params.PackageName, g.Params.TypeName)
+			optional.FieldName, g.Params.PackageName, typeName)
 	}
 
 	optional.Type = types.TypeString(typ.Type(), g.getQualifier)
 	log.Infof("Found optional field %s of type %s", optional.FieldName, typ.Type())
-	g.Params.Optionals = append(g.Params.Optionals, optional)
+	g.Params.Optionals[typeName] = append(g.Params.Optionals[typeName], optional)
 	return nil
 }
 
-func (g *Generator) processForward(field *ast.Field, methods []string) error {
+func (g *Generator) processForward(typeName string, field *ast.Field, methods []string) error {
 	// Resolve the type of the field to figure out its methods
 	typ, ok := g.Types[field.Names[0]]
 	if !ok {
 		return fmt.Errorf("Cannot resolve type of field %s of %s.%s",
-			field.Names[0].Name, g.Params.PackageName, g.Params.TypeName)
+			field.Names[0].Name, g.Params.PackageName, typeName)
 	}
 
 	methodSet := types.NewMethodSet(typ.Type())
@@ -240,24 +249,18 @@ func (g *Generator) processForward(field *ast.Field, methods []string) error {
 
 		log.Infof("Found forward method %s%s in field %s",
 			forward.MethodName, forward.Signature, forward.FieldName)
-		g.Params.Forwards = append(g.Params.Forwards, forward)
+		g.Params.Forwards[typeName] = append(g.Params.Forwards[typeName], forward)
 	}
 	return nil
 }
 
-func (g *Generator) DiscoverTaggedFields(typ string) error {
-	log.Infof("Processing type %s", typ)
+func (g *Generator) DiscoverTypes() error {
+	log.Infof("Discovering types")
 
-	// Initialize the map of qualifiers for parameter types, we generate them at random
-	// for each package path to avoid conflicts
-	g.Params.Qualifiers = make(map[string]string)
-	g.Params.TypeName = typ
-
-	// Search through the files in the package for the type for which we're generating
-	// the methods
+	// Search through the files in the package for type that we can generate methods for
 	var fields []*ast.Field
-	for name, parsedFile := range g.ParsedFiles {
-		log.Debugf("Looking for %s in %s", g.Params.TypeName, name)
+	for fileName, parsedFile := range g.ParsedFiles {
+		log.Debugf("Looking at %s", fileName)
 		for _, decl := range parsedFile.Decls {
 			genDecl, ok := decl.(*ast.GenDecl)
 			if !ok || genDecl.Tok != token.TYPE || len(genDecl.Specs) != 1 {
@@ -265,43 +268,37 @@ func (g *Generator) DiscoverTaggedFields(typ string) error {
 			}
 
 			typeSpec, ok := genDecl.Specs[0].(*ast.TypeSpec)
-			if !ok || typeSpec.Name.Name != g.Params.TypeName {
+			if !ok {
 				continue
 			}
+			typeName := typeSpec.Name.Name
 			structType, ok := typeSpec.Type.(*ast.StructType)
 			if !ok {
 				continue
 			}
 			fields = structType.Fields.List
-		}
-		if fields == nil {
-			log.Debugf("Did not find %s in %s", g.Params.TypeName, name)
-		} else {
-			break
-		}
-	}
-
-	if fields == nil {
-		return fmt.Errorf("Could not find %s.%s", g.Params.PackageName,
-			g.Params.TypeName)
-	}
-
-	// Found. Process the fields.
-	for _, field := range fields {
-		if field.Tag == nil || field.Tag.Kind != token.STRING {
-			continue
-		}
-
-		tag := field.Tag.Value[1 : len(field.Tag.Value)-1]
-		if tag == "optional" {
-			if err := g.processOptional(field); err != nil {
-				return err
+			if fields == nil {
+				continue
 			}
-		}
 
-		if strings.HasPrefix(tag, "forward") {
-			if err := g.processForward(field, strings.Split(tag[8:], ",")); err != nil {
-				return err
+			log.Debugf("Processing %s", typeName)
+			for _, field := range fields {
+				if field.Tag == nil || field.Tag.Kind != token.STRING {
+					continue
+				}
+
+				tag := field.Tag.Value[1 : len(field.Tag.Value)-1]
+				if tag == "optional" {
+					if err := g.processOptional(typeName, field); err != nil {
+						return err
+					}
+				}
+
+				if strings.HasPrefix(tag, "forward") {
+					if err := g.processForward(typeName, field, strings.Split(tag[8:], ",")); err != nil {
+						return err
+					}
+				}
 			}
 		}
 	}
@@ -337,16 +334,8 @@ func (g *Generator) GenerateCode(fileName string) error {
 	return nil
 }
 
-func (g *Generator) Reset() {
-	g.Params = TemplateParams{
-		PackageName: g.Params.PackageName,
-		Timestamp:   time.Now().Format(time.UnixDate),
-	}
-}
-
 func main() {
 	logLevel := flag.String("log-level", "Info", "verbosity of the diagnostic information")
-	types := flag.String("types", "", "a comma-separated list of types to be parsed")
 	flag.Parse()
 
 	log.SetFormatter(&prefixed.TextFormatter{
@@ -374,17 +363,11 @@ func main() {
 		log.Fatalf("Cannot parse current package: %s", err)
 	}
 
-	typesSlice := strings.Split(*types, ",")
-	for _, typ := range typesSlice {
-		g.Reset()
+	if err := g.DiscoverTypes(); err != nil {
+		log.Fatalf("Cannot discover types: %s", err)
+	}
 
-		if err := g.DiscoverTaggedFields(typ); err != nil {
-			log.Fatalf("Cannot discover tagged fields: %s", err)
-		}
-
-		fileName := fmt.Sprintf("tagged_methods_%s.go", strings.ToLower(typ))
-		if err := g.GenerateCode(fileName); err != nil {
-			log.Fatalf("Cannot generate code: %s", err)
-		}
+	if err := g.GenerateCode("tagged_methods.go"); err != nil {
+		log.Fatalf("Cannot generate code: %s", err)
 	}
 }
