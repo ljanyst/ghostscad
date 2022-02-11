@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Thu Feb 10 20:06:35 CET 2022.
+// Do not edit. Automatically generated on Fri Feb 11 18:21:00 CET 2022.
 
 package primitive
 
@@ -59,6 +59,16 @@ func (o *LinearExtrusion) SetFn(val uint16) *LinearExtrusion {
 	return o
 }
 
+func (o *RotationExtrusion) SetAngle(val float64) *RotationExtrusion {
+	o.Angle = val
+	return o
+}
+
+func (o *RotationExtrusion) SetConvexity(val uint16) *RotationExtrusion {
+	o.Convexity = val
+	return o
+}
+
 func (o *Surface) SetCenter(val bool) *Surface {
 	o.Center = val
 	return o
@@ -90,6 +100,26 @@ func (o *Cylinder) SetFn(val uint16) *Cylinder {
 }
 
 func (o *LinearExtrusion) Add(items ...Primitive) *LinearExtrusion {
+	o.Items.Add(items...)
+	return o
+}
+
+func (o *RotationExtrusion) SetFa(val float64) *RotationExtrusion {
+	o.Circular.SetFa(val)
+	return o
+}
+
+func (o *RotationExtrusion) SetFs(val float64) *RotationExtrusion {
+	o.Circular.SetFs(val)
+	return o
+}
+
+func (o *RotationExtrusion) SetFn(val uint16) *RotationExtrusion {
+	o.Circular.SetFn(val)
+	return o
+}
+
+func (o *RotationExtrusion) Add(items ...Primitive) *RotationExtrusion {
 	o.Items.Add(items...)
 	return o
 }
