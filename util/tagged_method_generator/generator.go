@@ -52,6 +52,33 @@ func (o *{{ $type }}) {{ $forward.MethodName }}{{ $forward.Signature }} *{{ $typ
 }
 {{ end }}
 {{ end }}
+
+{{ range $type, $field := .Prefixes }}
+func (o *{{ $type }}) Disable() Primitive {
+	o.{{ $field }} = "*"
+  return o
+}
+
+func (o *{{ $type }}) ShowOnly() Primitive {
+	o.{{ $field }} = "!"
+  return o
+}
+
+func (o *{{ $type }}) Highlight() Primitive {
+	o.{{ $field }} = "#"
+  return o
+}
+
+func (o *{{ $type }}) Transparent() Primitive {
+	o.{{ $field }} = "%"
+  return o
+}
+
+func (o *{{ $type }}) Prefix() string {
+	return o.{{ $field }}
+}
+
+{{ end }}
 `
 
 type Optional struct {
@@ -70,6 +97,7 @@ type TemplateParams struct {
 	PackageName string
 	Optionals   map[string][]Optional
 	Forwards    map[string][]Forward
+	Prefixes    map[string]string
 	Timestamp   string
 	Qualifiers  map[string]string
 }
@@ -102,6 +130,7 @@ func (g *Generator) ParseCurrentPackage() error {
 	g.Params.Timestamp = time.Now().Format(time.UnixDate)
 	g.Params.Optionals = make(map[string][]Optional)
 	g.Params.Forwards = make(map[string][]Forward)
+	g.Params.Prefixes = make(map[string]string)
 
 	// Initialize the map of qualifiers for parameter types, we generate them at random
 	// for each package path to avoid conflicts
@@ -171,6 +200,30 @@ QualifierGen:
 	// Tough luck, run out of combinations
 	log.Fatalf("Cannot generate a qualifier for package %s", p.Path())
 	return ""
+}
+
+func (g *Generator) processPrefix(typeName string, field *ast.Field) error {
+	fieldName := field.Names[0].Name
+
+	if previous, ok := g.Params.Prefixes[typeName]; ok {
+		return fmt.Errorf("Type %s already has a prefix field named %s",
+			typeName, previous)
+	}
+
+	typ, ok := g.Types[field.Names[0]]
+	if !ok {
+		return fmt.Errorf("Cannot resolve type of field %s of %s.%s",
+			fieldName, g.Params.PackageName, typeName)
+	}
+
+	if typ.Type().String() != "string" {
+		return fmt.Errorf("A prefix field %s.%s must be a string, found: %s",
+			typeName, fieldName, typ.Type())
+	}
+
+	log.Infof("Found prefix field %s of type %s", fieldName, typ.Type())
+	g.Params.Prefixes[typeName] = fieldName
+	return nil
 }
 
 func (g *Generator) processOptional(typeName string, field *ast.Field) error {
@@ -296,6 +349,12 @@ func (g *Generator) DiscoverTypes() error {
 
 				if strings.HasPrefix(tag, "forward") {
 					if err := g.processForward(typeName, field, strings.Split(tag[8:], ",")); err != nil {
+						return err
+					}
+				}
+
+				if tag == "prefix" {
+					if err := g.processPrefix(typeName, field); err != nil {
 						return err
 					}
 				}
