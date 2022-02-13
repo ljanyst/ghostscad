@@ -260,7 +260,7 @@ func (g *Generator) DiscoverTypes() error {
 	// Search through the files in the package for type that we can generate methods for
 	var fields []*ast.Field
 	for fileName, parsedFile := range g.ParsedFiles {
-		log.Debugf("Looking at %s", fileName)
+		log.Infof("Looking at %s", fileName)
 		for _, decl := range parsedFile.Decls {
 			genDecl, ok := decl.(*ast.GenDecl)
 			if !ok || genDecl.Tok != token.TYPE || len(genDecl.Specs) != 1 {
