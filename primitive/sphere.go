@@ -13,7 +13,7 @@ type Sphere struct {
 	Radius   float64
 	Circular *Circular "forward:SetFa,SetFs,SetFn"
 	name     string
-	prefix   *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
+	prefix   string "prefix"
 }
 
 func NewSphere(radius float64) *Sphere {
@@ -21,7 +21,6 @@ func NewSphere(radius float64) *Sphere {
 		Radius:   radius,
 		Circular: &Circular{},
 		name:     "sphere",
-		prefix:   &PrefixImpl{},
 	}
 }
 
@@ -34,7 +33,7 @@ func NewCircle(radius float64) *Sphere {
 }
 
 func (o *Sphere) Render(w *bufio.Writer) {
-	w.WriteString(o.prefix.String())
+	w.WriteString(o.Prefix())
 	w.WriteString(fmt.Sprintf("%s(r=%f%s);\n",
 		o.name,
 		o.Radius,

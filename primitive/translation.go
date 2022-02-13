@@ -13,15 +13,14 @@ import (
 type Translation struct {
 	ParentImpl
 	Offset Vec3
-	Items  *List       "forward:Add"
-	prefix *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
+	Items  *List  "forward:Add"
+	prefix string "prefix"
 }
 
 func NewTranslation(offset Vec3, items ...Primitive) *Translation {
 	ret := &Translation{
 		Offset: offset,
 		Items:  NewList(),
-		prefix: &PrefixImpl{},
 	}
 	ret.Items.SetParent(ret)
 	ret.Items.Add(items...)
@@ -29,7 +28,7 @@ func NewTranslation(offset Vec3, items ...Primitive) *Translation {
 }
 
 func (o *Translation) Render(w *bufio.Writer) {
-	w.WriteString(o.prefix.String())
+	w.WriteString(o.Prefix())
 	w.WriteString(
 		fmt.Sprintf("translate([%f, %f, %f]) ", o.Offset[0], o.Offset[1], o.Offset[2]),
 	)

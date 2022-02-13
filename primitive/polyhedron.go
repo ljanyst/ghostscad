@@ -14,8 +14,8 @@ type Polyhedron struct {
 	ParentImpl
 	Points    []Vec3
 	Faces     []Vec3
-	Convexity int         "optional"
-	prefix    *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
+	Convexity int    "optional"
+	prefix    string "prefix"
 }
 
 func NewPolyhedron(points []Vec3, faces []Vec3) *Polyhedron {
@@ -23,12 +23,11 @@ func NewPolyhedron(points []Vec3, faces []Vec3) *Polyhedron {
 		Points:    points,
 		Faces:     faces,
 		Convexity: 0,
-		prefix:    &PrefixImpl{},
 	}
 }
 
 func (o *Polyhedron) Render(w *bufio.Writer) {
-	w.WriteString(o.prefix.String())
+	w.WriteString(o.Prefix())
 	w.WriteString("polyhedron(points=[")
 	for i, pt := range o.Points {
 		w.WriteString(fmt.Sprintf("[%f, %f, %f]", pt[0], pt[1], pt[2]))

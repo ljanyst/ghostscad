@@ -11,9 +11,9 @@ import (
 type Import struct {
 	ParentImpl
 	File      string
-	Convexity int         "optional"
-	Layer     string      "optional"
-	prefix    *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
+	Convexity int    "optional"
+	Layer     string "optional"
+	prefix    string "prefix"
 }
 
 func NewImport(file string) *Import {
@@ -21,12 +21,11 @@ func NewImport(file string) *Import {
 		File:      file,
 		Convexity: 0,
 		Layer:     "",
-		prefix:    &PrefixImpl{},
 	}
 }
 
 func (o *Import) Render(w *bufio.Writer) {
-	w.WriteString(o.prefix.String())
+	w.WriteString(o.Prefix())
 	w.WriteString("import(\"")
 	w.WriteString(o.File)
 	w.WriteString("\"")

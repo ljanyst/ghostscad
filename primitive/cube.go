@@ -13,20 +13,19 @@ import (
 type Cube struct {
 	ParentImpl
 	Dims   Vec3
-	Center bool        "optional"
-	prefix *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
+	Center bool   "optional"
+	prefix string "prefix"
 }
 
 func NewCube(dims Vec3) *Cube {
 	return &Cube{
 		Dims:   dims,
 		Center: true,
-		prefix: &PrefixImpl{},
 	}
 }
 
 func (o *Cube) Render(w *bufio.Writer) {
-	w.WriteString(o.prefix.String())
+	w.WriteString(o.Prefix())
 	w.WriteString(
 		fmt.Sprintf("cube([%f, %f, %f], center=%t);\n", o.Dims[0], o.Dims[1], o.Dims[2], o.Center),
 	)

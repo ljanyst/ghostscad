@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Sun Feb 13 18:34:53 CET 2022.
+// Do not edit. Automatically generated on Sun Feb 13 18:56:37 CET 2022.
 
 package primitive
 
@@ -99,26 +99,6 @@ func (o *Surface) SetConvexity(val int) *Surface {
 	return o
 }
 
-func (o *Cube) Disable() *Cube {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *Cube) ShowOnly() *Cube {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *Cube) Highlight() *Cube {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *Cube) Transparent() *Cube {
-	o.prefix.Transparent()
-	return o
-}
-
 func (o *Cylinder) SetFa(val float64) *Cylinder {
 	o.Circular.SetFa(val)
 	return o
@@ -134,128 +114,8 @@ func (o *Cylinder) SetFn(val uint16) *Cylinder {
 	return o
 }
 
-func (o *Cylinder) Disable() *Cylinder {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *Cylinder) ShowOnly() *Cylinder {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *Cylinder) Highlight() *Cylinder {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *Cylinder) Transparent() *Cylinder {
-	o.prefix.Transparent()
-	return o
-}
-
-func (o *Import) Disable() *Import {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *Import) ShowOnly() *Import {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *Import) Highlight() *Import {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *Import) Transparent() *Import {
-	o.prefix.Transparent()
-	return o
-}
-
 func (o *LinearExtrusion) Add(items ...Primitive) *LinearExtrusion {
 	o.Items.Add(items...)
-	return o
-}
-
-func (o *LinearExtrusion) Disable() *LinearExtrusion {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *LinearExtrusion) ShowOnly() *LinearExtrusion {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *LinearExtrusion) Highlight() *LinearExtrusion {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *LinearExtrusion) Transparent() *LinearExtrusion {
-	o.prefix.Transparent()
-	return o
-}
-
-func (o *List) Disable() *List {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *List) ShowOnly() *List {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *List) Highlight() *List {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *List) Transparent() *List {
-	o.prefix.Transparent()
-	return o
-}
-
-func (o *Polygon) Disable() *Polygon {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *Polygon) ShowOnly() *Polygon {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *Polygon) Highlight() *Polygon {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *Polygon) Transparent() *Polygon {
-	o.prefix.Transparent()
-	return o
-}
-
-func (o *Polyhedron) Disable() *Polyhedron {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *Polyhedron) ShowOnly() *Polyhedron {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *Polyhedron) Highlight() *Polyhedron {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *Polyhedron) Transparent() *Polyhedron {
-	o.prefix.Transparent()
 	return o
 }
 
@@ -279,48 +139,8 @@ func (o *RotationExtrusion) Add(items ...Primitive) *RotationExtrusion {
 	return o
 }
 
-func (o *RotationExtrusion) Disable() *RotationExtrusion {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *RotationExtrusion) ShowOnly() *RotationExtrusion {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *RotationExtrusion) Highlight() *RotationExtrusion {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *RotationExtrusion) Transparent() *RotationExtrusion {
-	o.prefix.Transparent()
-	return o
-}
-
 func (o *Scale) Add(items ...Primitive) *Scale {
 	o.Items.Add(items...)
-	return o
-}
-
-func (o *Scale) Disable() *Scale {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *Scale) ShowOnly() *Scale {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *Scale) Highlight() *Scale {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *Scale) Transparent() *Scale {
-	o.prefix.Transparent()
 	return o
 }
 
@@ -339,67 +159,295 @@ func (o *Sphere) SetFn(val uint16) *Sphere {
 	return o
 }
 
-func (o *Sphere) Disable() *Sphere {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *Sphere) ShowOnly() *Sphere {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *Sphere) Highlight() *Sphere {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *Sphere) Transparent() *Sphere {
-	o.prefix.Transparent()
-	return o
-}
-
-func (o *Surface) Disable() *Surface {
-	o.prefix.Disable()
-	return o
-}
-
-func (o *Surface) ShowOnly() *Surface {
-	o.prefix.ShowOnly()
-	return o
-}
-
-func (o *Surface) Highlight() *Surface {
-	o.prefix.Highlight()
-	return o
-}
-
-func (o *Surface) Transparent() *Surface {
-	o.prefix.Transparent()
-	return o
-}
-
 func (o *Translation) Add(items ...Primitive) *Translation {
 	o.Items.Add(items...)
 	return o
 }
 
-func (o *Translation) Disable() *Translation {
-	o.prefix.Disable()
+func (o *Cube) Disable() Primitive {
+	o.prefix = "*"
 	return o
 }
 
-func (o *Translation) ShowOnly() *Translation {
-	o.prefix.ShowOnly()
+func (o *Cube) ShowOnly() Primitive {
+	o.prefix = "!"
 	return o
 }
 
-func (o *Translation) Highlight() *Translation {
-	o.prefix.Highlight()
+func (o *Cube) Highlight() Primitive {
+	o.prefix = "#"
 	return o
 }
 
-func (o *Translation) Transparent() *Translation {
-	o.prefix.Transparent()
+func (o *Cube) Transparent() Primitive {
+	o.prefix = "%"
 	return o
+}
+
+func (o *Cube) Prefix() string {
+	return o.prefix
+}
+
+func (o *Cylinder) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Cylinder) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Cylinder) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Cylinder) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Cylinder) Prefix() string {
+	return o.prefix
+}
+
+func (o *Import) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Import) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Import) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Import) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Import) Prefix() string {
+	return o.prefix
+}
+
+func (o *LinearExtrusion) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *LinearExtrusion) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *LinearExtrusion) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *LinearExtrusion) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *LinearExtrusion) Prefix() string {
+	return o.prefix
+}
+
+func (o *List) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *List) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *List) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *List) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *List) Prefix() string {
+	return o.prefix
+}
+
+func (o *Polygon) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Polygon) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Polygon) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Polygon) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Polygon) Prefix() string {
+	return o.prefix
+}
+
+func (o *Polyhedron) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Polyhedron) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Polyhedron) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Polyhedron) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Polyhedron) Prefix() string {
+	return o.prefix
+}
+
+func (o *RotationExtrusion) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *RotationExtrusion) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *RotationExtrusion) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *RotationExtrusion) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *RotationExtrusion) Prefix() string {
+	return o.prefix
+}
+
+func (o *Scale) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Scale) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Scale) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Scale) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Scale) Prefix() string {
+	return o.prefix
+}
+
+func (o *Sphere) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Sphere) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Sphere) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Sphere) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Sphere) Prefix() string {
+	return o.prefix
+}
+
+func (o *Surface) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Surface) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Surface) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Surface) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Surface) Prefix() string {
+	return o.prefix
+}
+
+func (o *Translation) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Translation) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Translation) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Translation) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Translation) Prefix() string {
+	return o.prefix
 }

@@ -11,14 +11,14 @@ import (
 type LinearExtrusion struct {
 	ParentImpl
 	Height    float64
-	Center    bool        "optional"
-	Convexity uint16      "optional"
-	Twist     uint16      "optional"
-	Slices    uint16      "optional"
-	Scale     float64     "optional"
-	Fn        uint16      "optional"
-	Items     *List       "forward:Add"
-	prefix    *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
+	Center    bool    "optional"
+	Convexity uint16  "optional"
+	Twist     uint16  "optional"
+	Slices    uint16  "optional"
+	Scale     float64 "optional"
+	Fn        uint16  "optional"
+	Items     *List   "forward:Add"
+	prefix    string  "prefix"
 }
 
 func NewLinearExtrusion(height float64, items ...Primitive) *LinearExtrusion {
@@ -30,7 +30,6 @@ func NewLinearExtrusion(height float64, items ...Primitive) *LinearExtrusion {
 		Scale:     1.0,
 		Fn:        16,
 		Items:     NewList(),
-		prefix:    &PrefixImpl{},
 	}
 	ret.Items.SetParent(ret)
 	ret.Items.Add(items...)
@@ -38,7 +37,7 @@ func NewLinearExtrusion(height float64, items ...Primitive) *LinearExtrusion {
 }
 
 func (o *LinearExtrusion) Render(w *bufio.Writer) {
-	w.WriteString(o.prefix.String())
+	w.WriteString(o.Prefix())
 	w.WriteString("linear_extrude(")
 	w.WriteString(fmt.Sprintf("height=%f", o.Height))
 	w.WriteString(fmt.Sprintf(", center=%t", o.Center))

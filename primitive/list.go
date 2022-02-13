@@ -10,13 +10,13 @@ import (
 type List struct {
 	ParentImpl
 	Items  []Primitive
-	prefix *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
+	prefix string "prefix"
 }
 
-func NewList() *List {
-	return &List{
-		prefix: &PrefixImpl{},
-	}
+func NewList(items ...Primitive) *List {
+	ret := &List{}
+	ret.Add(items...)
+	return ret
 }
 
 func (o *List) Add(items ...Primitive) *List {
@@ -28,7 +28,7 @@ func (o *List) Add(items ...Primitive) *List {
 }
 
 func (o *List) Render(w *bufio.Writer) {
-	w.WriteString(o.prefix.String())
+	w.WriteString(o.Prefix())
 	w.WriteString("{\n")
 	for _, item := range o.Items {
 		item.Render(w)

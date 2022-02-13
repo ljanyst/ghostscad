@@ -12,15 +12,16 @@ import (
 type Primitive interface {
 	SetParent(Primitive)
 	Parent() Primitive
+	Disable() Primitive
+	Highlight() Primitive
+	ShowOnly() Primitive
+	Transparent() Primitive
+	Prefix() string
 	Render(w *bufio.Writer)
 }
 
 type ParentImpl struct {
 	parent Primitive
-}
-
-type PrefixImpl struct {
-	prefix string
 }
 
 func (o *ParentImpl) SetParent(p Primitive) {
@@ -29,24 +30,4 @@ func (o *ParentImpl) SetParent(p Primitive) {
 
 func (o *ParentImpl) Parent() Primitive {
 	return o.parent
-}
-
-func (o *PrefixImpl) Disable() {
-	o.prefix = "*"
-}
-
-func (o *PrefixImpl) ShowOnly() {
-	o.prefix = "!"
-}
-
-func (o *PrefixImpl) Highlight() {
-	o.prefix = "#"
-}
-
-func (o *PrefixImpl) Transparent() {
-	o.prefix = "%"
-}
-
-func (o *PrefixImpl) String() string {
-	return o.prefix
 }
