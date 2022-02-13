@@ -1,4 +1,4 @@
-// Copyright 2021 Lukasz Janyst <lukasz@jany.st>
+// Copyright 2021-2022 Lukasz Janyst <lukasz@jany.st>
 // Licensed under the MIT license, see the LICENSE file for details.
 
 package main
