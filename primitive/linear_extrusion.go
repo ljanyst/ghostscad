@@ -9,6 +9,7 @@ import (
 )
 
 type LinearExtrusion struct {
+	Parent
 	Height    float64
 	Center    bool    "optional"
 	Convexity uint16  "optional"
@@ -20,15 +21,18 @@ type LinearExtrusion struct {
 }
 
 func NewLinearExtrusion(height float64, items ...Primitive) *LinearExtrusion {
-	return &LinearExtrusion{
+	ret := &LinearExtrusion{
 		Height:    height,
 		Center:    true,
 		Convexity: 10,
 		Slices:    20,
 		Scale:     1.0,
 		Fn:        16,
-		Items:     NewList(items...),
+		Items:     NewList(),
 	}
+	ret.Items.SetParent(ret)
+	ret.Items.Add(items...)
+	return ret
 }
 
 func (o *LinearExtrusion) Render(w *bufio.Writer) {

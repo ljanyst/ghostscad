@@ -8,16 +8,18 @@ import (
 )
 
 type List struct {
+	Parent
 	Items []Primitive
 }
 
-func NewList(items ...Primitive) *List {
-	return &List{
-		Items: items,
-	}
+func NewList() *List {
+	return &List{}
 }
 
 func (o *List) Add(items ...Primitive) *List {
+	for _, item := range items {
+		item.SetParent(o)
+	}
 	o.Items = append(o.Items, items...)
 	return o
 }

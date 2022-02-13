@@ -9,6 +9,7 @@ import (
 )
 
 type Sphere struct {
+	Parent
 	Radius   float64
 	Circular *Circular "forward:SetFa,SetFs,SetFn"
 	name     string

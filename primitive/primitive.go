@@ -10,5 +10,19 @@ import (
 )
 
 type Primitive interface {
+	SetParent(Primitive)
+	GetParent() Primitive
 	Render(w *bufio.Writer)
+}
+
+type Parent struct {
+	parent Primitive
+}
+
+func (c *Parent) SetParent(p Primitive) {
+	c.parent = p
+}
+
+func (c *Parent) GetParent() Primitive {
+	return c.parent
 }

@@ -9,6 +9,7 @@ import (
 )
 
 type Cylinder struct {
+	Parent
 	H        float64
 	RTop     float64
 	RBottom  float64   "optional"

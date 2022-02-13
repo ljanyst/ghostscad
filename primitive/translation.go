@@ -11,20 +11,19 @@ import (
 )
 
 type Translation struct {
+	Parent
 	Offset Vec3
-	Items  *List
+	Items  *List "forward:Add"
 }
 
 func NewTranslation(offset Vec3, items ...Primitive) *Translation {
-	return &Translation{
+	ret := &Translation{
 		Offset: offset,
-		Items:  NewList(items...),
+		Items:  NewList(),
 	}
-}
-
-func (o *Translation) Add(items ...Primitive) *Translation {
-	o.Items.Add(items...)
-	return o
+	ret.Items.SetParent(ret)
+	ret.Items.Add(items...)
+	return ret
 }
 
 func (o *Translation) Render(w *bufio.Writer) {

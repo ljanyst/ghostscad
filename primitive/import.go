@@ -9,6 +9,7 @@ import (
 )
 
 type Import struct {
+	Parent
 	File      string
 	Convexity int    "optional"
 	Layer     string "optional"

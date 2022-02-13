@@ -11,6 +11,7 @@ import (
 )
 
 type Cube struct {
+	Parent
 	Dims   Vec3
 	Center bool "optional"
 }

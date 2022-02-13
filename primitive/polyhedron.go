@@ -11,6 +11,7 @@ import (
 )
 
 type Polyhedron struct {
+	Parent
 	Points []Vec3
 	Faces  []Vec3
 }

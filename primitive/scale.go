@@ -11,15 +11,19 @@ import (
 )
 
 type Scale struct {
+	Parent
 	Scale Vec3
 	Items *List "forward:Add"
 }
 
 func NewScale(scale Vec3, items ...Primitive) *Scale {
-	return &Scale{
+	ret := &Scale{
 		Scale: scale,
-		Items: NewList(items...),
+		Items: NewList(),
 	}
+	ret.Items.SetParent(ret)
+	ret.Items.Add(items...)
+	return ret
 }
 
 func (o *Scale) Render(w *bufio.Writer) {

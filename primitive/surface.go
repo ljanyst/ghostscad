@@ -9,6 +9,7 @@ import (
 )
 
 type Surface struct {
+	Parent
 	File      string
 	Center    bool "optional"
 	Invert    bool "optional"

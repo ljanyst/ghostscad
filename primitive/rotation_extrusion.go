@@ -9,6 +9,7 @@ import (
 )
 
 type RotationExtrusion struct {
+	Parent
 	Angle     float64   "optional"
 	Convexity uint16    "optional"
 	Circular  *Circular "forward:SetFa,SetFs,SetFn"
@@ -16,12 +17,15 @@ type RotationExtrusion struct {
 }
 
 func NewRotationExtrusion(items ...Primitive) *RotationExtrusion {
-	return &RotationExtrusion{
+	ret := &RotationExtrusion{
 		Angle:     360,
 		Convexity: 10,
 		Circular:  &Circular{},
-		Items:     NewList(items...),
+		Items:     NewList(),
 	}
+	ret.Items.SetParent(ret)
+	ret.Items.Add(items...)
+	return ret
 }
 
 func (o *RotationExtrusion) Render(w *bufio.Writer) {
