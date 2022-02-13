@@ -11,19 +11,22 @@ import (
 )
 
 type Polyhedron struct {
-	Parent
+	ParentImpl
 	Points []Vec3
 	Faces  []Vec3
+	prefix *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
 }
 
 func NewPolyhedron(points []Vec3, faces []Vec3) *Polyhedron {
 	return &Polyhedron{
 		Points: points,
 		Faces:  faces,
+		prefix: &PrefixImpl{},
 	}
 }
 
 func (o *Polyhedron) Render(w *bufio.Writer) {
+	w.WriteString(o.prefix.String())
 	w.WriteString("polyhedron(points=[")
 	for i, pt := range o.Points {
 		w.WriteString(fmt.Sprintf("[%f, %f, %f]", pt[0], pt[1], pt[2]))

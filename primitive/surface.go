@@ -9,11 +9,12 @@ import (
 )
 
 type Surface struct {
-	Parent
+	ParentImpl
 	File      string
-	Center    bool "optional"
-	Invert    bool "optional"
-	Convexity int  "optional"
+	Center    bool        "optional"
+	Invert    bool        "optional"
+	Convexity int         "optional"
+	prefix    *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
 }
 
 func NewSurface(file string) *Surface {
@@ -22,10 +23,12 @@ func NewSurface(file string) *Surface {
 		Center:    true,
 		Invert:    false,
 		Convexity: 0,
+		prefix:    &PrefixImpl{},
 	}
 }
 
 func (o *Surface) Render(w *bufio.Writer) {
+	w.WriteString(o.prefix.String())
 	w.WriteString("surface(file=\"")
 	w.WriteString(o.File)
 	w.WriteString("\"")

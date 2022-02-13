@@ -9,11 +9,12 @@ import (
 )
 
 type RotationExtrusion struct {
-	Parent
-	Angle     float64   "optional"
-	Convexity uint16    "optional"
-	Circular  *Circular "forward:SetFa,SetFs,SetFn"
-	Items     *List     "forward:Add"
+	ParentImpl
+	Angle     float64     "optional"
+	Convexity uint16      "optional"
+	Circular  *Circular   "forward:SetFa,SetFs,SetFn"
+	Items     *List       "forward:Add"
+	prefix    *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
 }
 
 func NewRotationExtrusion(items ...Primitive) *RotationExtrusion {
@@ -22,6 +23,7 @@ func NewRotationExtrusion(items ...Primitive) *RotationExtrusion {
 		Convexity: 10,
 		Circular:  &Circular{},
 		Items:     NewList(),
+		prefix:    &PrefixImpl{},
 	}
 	ret.Items.SetParent(ret)
 	ret.Items.Add(items...)
@@ -29,6 +31,7 @@ func NewRotationExtrusion(items ...Primitive) *RotationExtrusion {
 }
 
 func (o *RotationExtrusion) Render(w *bufio.Writer) {
+	w.WriteString(o.prefix.String())
 	w.WriteString("rotate_extrude(")
 	w.WriteString(fmt.Sprintf("angle=%f", o.Angle))
 	w.WriteString(fmt.Sprintf(", convexity=%d", o.Convexity))

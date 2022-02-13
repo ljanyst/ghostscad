@@ -8,12 +8,15 @@ import (
 )
 
 type List struct {
-	Parent
-	Items []Primitive
+	ParentImpl
+	Items  []Primitive
+	prefix *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
 }
 
 func NewList() *List {
-	return &List{}
+	return &List{
+		prefix: &PrefixImpl{},
+	}
 }
 
 func (o *List) Add(items ...Primitive) *List {
@@ -25,6 +28,7 @@ func (o *List) Add(items ...Primitive) *List {
 }
 
 func (o *List) Render(w *bufio.Writer) {
+	w.WriteString(o.prefix.String())
 	w.WriteString("{\n")
 	for _, item := range o.Items {
 		item.Render(w)

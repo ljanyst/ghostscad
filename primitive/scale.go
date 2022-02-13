@@ -11,15 +11,17 @@ import (
 )
 
 type Scale struct {
-	Parent
-	Scale Vec3
-	Items *List "forward:Add"
+	ParentImpl
+	Scale  Vec3
+	Items  *List       "forward:Add"
+	prefix *PrefixImpl "forward:Disable,ShowOnly,Highlight,Transparent"
 }
 
 func NewScale(scale Vec3, items ...Primitive) *Scale {
 	ret := &Scale{
-		Scale: scale,
-		Items: NewList(),
+		Scale:  scale,
+		Items:  NewList(),
+		prefix: &PrefixImpl{},
 	}
 	ret.Items.SetParent(ret)
 	ret.Items.Add(items...)
@@ -27,6 +29,7 @@ func NewScale(scale Vec3, items ...Primitive) *Scale {
 }
 
 func (o *Scale) Render(w *bufio.Writer) {
+	w.WriteString(o.prefix.String())
 	w.WriteString(
 		fmt.Sprintf("scale([%f, %f, %f]) ", o.Scale[0], o.Scale[1], o.Scale[2]),
 	)

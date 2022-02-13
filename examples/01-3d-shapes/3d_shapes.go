@@ -73,11 +73,11 @@ func buildShapes() Primitive {
 		),
 		NewTranslation(
 			Vec3{40, 0, 0},
-			NewImport("die.stl"),
+			NewImport("die.stl").Highlight(),
 		),
 		NewTranslation(
 			Vec3{60, 0, 0},
-			NewCylinder(10, 3).SetRBottom(5),
+			NewCylinder(10, 3).SetRBottom(5).Transparent(),
 		),
 		NewTranslation(
 			Vec3{80, 0, 0},
