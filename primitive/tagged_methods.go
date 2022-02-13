@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Sun Feb 13 16:30:48 CET 2022.
+// Do not edit. Automatically generated on Sun Feb 13 18:34:53 CET 2022.
 
 package primitive
 
@@ -56,6 +56,21 @@ func (o *LinearExtrusion) SetScale(val float64) *LinearExtrusion {
 
 func (o *LinearExtrusion) SetFn(val uint16) *LinearExtrusion {
 	o.Fn = val
+	return o
+}
+
+func (o *Polygon) SetPaths(val [][]int) *Polygon {
+	o.Paths = val
+	return o
+}
+
+func (o *Polygon) SetConvexity(val int) *Polygon {
+	o.Convexity = val
+	return o
+}
+
+func (o *Polyhedron) SetConvexity(val int) *Polyhedron {
+	o.Convexity = val
 	return o
 }
 
@@ -200,6 +215,26 @@ func (o *List) Highlight() *List {
 }
 
 func (o *List) Transparent() *List {
+	o.prefix.Transparent()
+	return o
+}
+
+func (o *Polygon) Disable() *Polygon {
+	o.prefix.Disable()
+	return o
+}
+
+func (o *Polygon) ShowOnly() *Polygon {
+	o.prefix.ShowOnly()
+	return o
+}
+
+func (o *Polygon) Highlight() *Polygon {
+	o.prefix.Highlight()
+	return o
+}
+
+func (o *Polygon) Transparent() *Polygon {
 	o.prefix.Transparent()
 	return o
 }
