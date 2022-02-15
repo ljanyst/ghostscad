@@ -33,7 +33,7 @@ func (o *Polygon) Render(w *bufio.Writer) {
 			w.WriteString(", ")
 		}
 	}
-	w.WriteString("])")
+	w.WriteString("]")
 	if o.Paths != nil && len(o.Paths) > 0 {
 		w.WriteString(", paths=[")
 		for i, path := range o.Paths {
