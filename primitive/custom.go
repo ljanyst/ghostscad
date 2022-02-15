@@ -5,7 +5,6 @@ package primitive
 
 import (
 	"bufio"
-	"fmt"
 )
 
 type Custom struct {
