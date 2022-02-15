@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Tue Feb 15 15:36:05 CET 2022.
+// Do not edit. Automatically generated on Tue Feb 15 18:30:25 CET 2022.
 
 package primitive
 
@@ -149,6 +149,11 @@ func (o *Text) SetFn(val uint16) *Text {
 	return o
 }
 
+func (o *Boolean) Add(items ...Primitive) *Boolean {
+	o.Items.Add(items...)
+	return o
+}
+
 func (o *Cylinder) SetFa(val float64) *Cylinder {
 	o.Circular.SetFa(val)
 	return o
@@ -212,6 +217,30 @@ func (o *Sphere) SetFn(val uint16) *Sphere {
 func (o *Transform) Add(items ...Primitive) *Transform {
 	o.Items.Add(items...)
 	return o
+}
+
+func (o *Boolean) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Boolean) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Boolean) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Boolean) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Boolean) Prefix() string {
+	return o.prefix
 }
 
 func (o *Cube) Disable() Primitive {
