@@ -11,6 +11,7 @@ import (
 var fa float64 = 2.0
 var fs float64 = 2.0
 var fn uint16 = 0
+var uses = []string{}
 
 func init() {
 	// According to the docs:
@@ -42,8 +43,16 @@ func SetFn(val uint16) {
 	fn = val
 }
 
+// Import SCAD files and fonts
+func Use(file string) {
+	uses = append(uses, file)
+}
+
 func renderGlobals(w *bufio.Writer) {
 	w.WriteString(fmt.Sprintf("$fa=%f;\n", fa))
 	w.WriteString(fmt.Sprintf("$fs=%f;\n", fs))
 	w.WriteString(fmt.Sprintf("$fn=%d;\n", fn))
+	for _, use := range uses {
+		w.WriteString(fmt.Sprintf("use <%s>;\n", use))
+	}
 }
