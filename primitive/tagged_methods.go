@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Tue Feb 15 15:17:05 CET 2022.
+// Do not edit. Automatically generated on Tue Feb 15 15:36:05 CET 2022.
 
 package primitive
 
@@ -235,6 +235,30 @@ func (o *Cube) Transparent() Primitive {
 }
 
 func (o *Cube) Prefix() string {
+	return o.prefix
+}
+
+func (o *Custom) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Custom) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Custom) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Custom) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Custom) Prefix() string {
 	return o.prefix
 }
 
