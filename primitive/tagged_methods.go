@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Tue Feb 15 13:16:35 CET 2022.
+// Do not edit. Automatically generated on Tue Feb 15 15:17:05 CET 2022.
 
 package primitive
 
@@ -101,6 +101,51 @@ func (o *Surface) SetInvert(val bool) *Surface {
 
 func (o *Surface) SetConvexity(val int) *Surface {
 	o.Convexity = val
+	return o
+}
+
+func (o *Text) SetSize(val uint16) *Text {
+	o.Size = val
+	return o
+}
+
+func (o *Text) SetFont(val string) *Text {
+	o.Font = val
+	return o
+}
+
+func (o *Text) SetHalign(val string) *Text {
+	o.Halign = val
+	return o
+}
+
+func (o *Text) SetValign(val string) *Text {
+	o.Valign = val
+	return o
+}
+
+func (o *Text) SetSpacing(val uint16) *Text {
+	o.Spacing = val
+	return o
+}
+
+func (o *Text) SetDirection(val string) *Text {
+	o.Direction = val
+	return o
+}
+
+func (o *Text) SetLanguage(val string) *Text {
+	o.Language = val
+	return o
+}
+
+func (o *Text) SetScript(val string) *Text {
+	o.Script = val
+	return o
+}
+
+func (o *Text) SetFn(val uint16) *Text {
+	o.Fn = val
 	return o
 }
 
@@ -454,6 +499,30 @@ func (o *Surface) Transparent() Primitive {
 }
 
 func (o *Surface) Prefix() string {
+	return o.prefix
+}
+
+func (o *Text) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Text) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Text) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Text) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Text) Prefix() string {
 	return o.prefix
 }
 
