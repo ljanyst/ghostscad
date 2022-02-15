@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Tue Feb 15 11:25:14 CET 2022.
+// Do not edit. Automatically generated on Tue Feb 15 13:16:35 CET 2022.
 
 package primitive
 
@@ -81,6 +81,11 @@ func (o *RotationExtrusion) SetAngle(val float64) *RotationExtrusion {
 
 func (o *RotationExtrusion) SetConvexity(val uint16) *RotationExtrusion {
 	o.Convexity = val
+	return o
+}
+
+func (o *Square) SetCenter(val bool) *Square {
+	o.Center = val
 	return o
 }
 
@@ -401,6 +406,30 @@ func (o *Sphere) Transparent() Primitive {
 }
 
 func (o *Sphere) Prefix() string {
+	return o.prefix
+}
+
+func (o *Square) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Square) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Square) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Square) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Square) Prefix() string {
 	return o.prefix
 }
 
