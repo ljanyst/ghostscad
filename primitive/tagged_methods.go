@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Sun Feb 13 18:56:37 CET 2022.
+// Do not edit. Automatically generated on Tue Feb 15 11:25:14 CET 2022.
 
 package primitive
 
@@ -159,7 +159,7 @@ func (o *Sphere) SetFn(val uint16) *Sphere {
 	return o
 }
 
-func (o *Translation) Add(items ...Primitive) *Translation {
+func (o *Transform) Add(items ...Primitive) *Transform {
 	o.Items.Add(items...)
 	return o
 }
@@ -428,26 +428,26 @@ func (o *Surface) Prefix() string {
 	return o.prefix
 }
 
-func (o *Translation) Disable() Primitive {
+func (o *Transform) Disable() Primitive {
 	o.prefix = "*"
 	return o
 }
 
-func (o *Translation) ShowOnly() Primitive {
+func (o *Transform) ShowOnly() Primitive {
 	o.prefix = "!"
 	return o
 }
 
-func (o *Translation) Highlight() Primitive {
+func (o *Transform) Highlight() Primitive {
 	o.prefix = "#"
 	return o
 }
 
-func (o *Translation) Transparent() Primitive {
+func (o *Transform) Transparent() Primitive {
 	o.prefix = "%"
 	return o
 }
 
-func (o *Translation) Prefix() string {
+func (o *Transform) Prefix() string {
 	return o.prefix
 }
