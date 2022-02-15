@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Tue Feb 15 18:30:25 CET 2022.
+// Do not edit. Automatically generated on Tue Feb 15 19:55:28 CET 2022.
 
 package primitive
 
@@ -170,6 +170,11 @@ func (o *Cylinder) SetFn(val uint16) *Cylinder {
 }
 
 func (o *LinearExtrusion) Add(items ...Primitive) *LinearExtrusion {
+	o.Items.Add(items...)
+	return o
+}
+
+func (o *Render) Add(items ...Primitive) *Render {
 	o.Items.Add(items...)
 	return o
 }
@@ -432,6 +437,30 @@ func (o *Polyhedron) Transparent() Primitive {
 }
 
 func (o *Polyhedron) Prefix() string {
+	return o.prefix
+}
+
+func (o *Render) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Render) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Render) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Render) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Render) Prefix() string {
 	return o.prefix
 }
 
