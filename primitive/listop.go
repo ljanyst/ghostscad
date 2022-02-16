@@ -7,15 +7,15 @@ import (
 	"bufio"
 )
 
-type Boolean struct {
+type ListOp struct {
 	ParentImpl
 	Items  *List "forward:Add"
 	name   string
 	prefix string "prefix"
 }
 
-func newBoolean(name string, items ...Primitive) *Boolean {
-	ret := &Boolean{
+func newListOp(name string, items ...Primitive) *ListOp {
+	ret := &ListOp{
 		Items: NewList(),
 		name:  name,
 	}
@@ -24,19 +24,19 @@ func newBoolean(name string, items ...Primitive) *Boolean {
 	return ret
 }
 
-func NewIntersection(items ...Primitive) *Boolean {
-	return newBoolean("intersection", items...)
+func NewIntersection(items ...Primitive) *ListOp {
+	return newListOp("intersection", items...)
 }
 
-func NewUnion(items ...Primitive) *Boolean {
-	return newBoolean("union", items...)
+func NewUnion(items ...Primitive) *ListOp {
+	return newListOp("union", items...)
 }
 
-func NewDifference(items ...Primitive) *Boolean {
-	return newBoolean("difference", items...)
+func NewDifference(items ...Primitive) *ListOp {
+	return newListOp("difference", items...)
 }
 
-func (o *Boolean) Render(w *bufio.Writer) {
+func (o *ListOp) Render(w *bufio.Writer) {
 	w.WriteString(o.Prefix())
 	w.WriteString(o.name)
 	w.WriteString("()")

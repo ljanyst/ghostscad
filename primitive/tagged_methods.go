@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Wed Feb 16 10:48:38 CET 2022.
+// Do not edit. Automatically generated on Wed Feb 16 11:06:38 CET 2022.
 
 package primitive
 
@@ -164,11 +164,6 @@ func (o *Text) SetFn(val uint16) *Text {
 	return o
 }
 
-func (o *Boolean) Add(items ...Primitive) *Boolean {
-	o.Items.Add(items...)
-	return o
-}
-
 func (o *Color) Add(items ...Primitive) *Color {
 	o.Items.Add(items...)
 	return o
@@ -190,6 +185,11 @@ func (o *Cylinder) SetFn(val uint16) *Cylinder {
 }
 
 func (o *LinearExtrusion) Add(items ...Primitive) *LinearExtrusion {
+	o.Items.Add(items...)
+	return o
+}
+
+func (o *ListOp) Add(items ...Primitive) *ListOp {
 	o.Items.Add(items...)
 	return o
 }
@@ -247,30 +247,6 @@ func (o *Sphere) SetFn(val uint16) *Sphere {
 func (o *Transform) Add(items ...Primitive) *Transform {
 	o.Items.Add(items...)
 	return o
-}
-
-func (o *Boolean) Disable() Primitive {
-	o.prefix = "*"
-	return o
-}
-
-func (o *Boolean) ShowOnly() Primitive {
-	o.prefix = "!"
-	return o
-}
-
-func (o *Boolean) Highlight() Primitive {
-	o.prefix = "#"
-	return o
-}
-
-func (o *Boolean) Transparent() Primitive {
-	o.prefix = "%"
-	return o
-}
-
-func (o *Boolean) Prefix() string {
-	return o.prefix
 }
 
 func (o *Color) Disable() Primitive {
@@ -438,6 +414,30 @@ func (o *List) Transparent() Primitive {
 }
 
 func (o *List) Prefix() string {
+	return o.prefix
+}
+
+func (o *ListOp) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *ListOp) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *ListOp) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *ListOp) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *ListOp) Prefix() string {
 	return o.prefix
 }
 
