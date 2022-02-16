@@ -36,6 +36,14 @@ func NewDifference(items ...Primitive) *ListOp {
 	return newListOp("difference", items...)
 }
 
+func NewHull(items ...Primitive) *ListOp {
+	return newListOp("hull", items...)
+}
+
+func NewMinkowski(items ...Primitive) *ListOp {
+	return newListOp("minkowski", items...)
+}
+
 func (o *ListOp) Render(w *bufio.Writer) {
 	w.WriteString(o.Prefix())
 	w.WriteString(o.name)
