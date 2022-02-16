@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Wed Feb 16 09:14:08 CET 2022.
+// Do not edit. Automatically generated on Wed Feb 16 10:48:38 CET 2022.
 
 package primitive
 
@@ -56,6 +56,21 @@ func (o *LinearExtrusion) SetScale(val float64) *LinearExtrusion {
 
 func (o *LinearExtrusion) SetFn(val uint16) *LinearExtrusion {
 	o.Fn = val
+	return o
+}
+
+func (o *Offset) SetR(val float64) *Offset {
+	o.R = val
+	return o
+}
+
+func (o *Offset) SetDelta(val float64) *Offset {
+	o.Delta = val
+	return o
+}
+
+func (o *Offset) SetChamfer(val bool) *Offset {
+	o.Chamfer = val
 	return o
 }
 
@@ -175,6 +190,11 @@ func (o *Cylinder) SetFn(val uint16) *Cylinder {
 }
 
 func (o *LinearExtrusion) Add(items ...Primitive) *LinearExtrusion {
+	o.Items.Add(items...)
+	return o
+}
+
+func (o *Offset) Add(items ...Primitive) *Offset {
 	o.Items.Add(items...)
 	return o
 }
@@ -418,6 +438,30 @@ func (o *List) Transparent() Primitive {
 }
 
 func (o *List) Prefix() string {
+	return o.prefix
+}
+
+func (o *Offset) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Offset) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Offset) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Offset) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Offset) Prefix() string {
 	return o.prefix
 }
 
