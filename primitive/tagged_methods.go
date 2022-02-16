@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Tue Feb 15 19:55:28 CET 2022.
+// Do not edit. Automatically generated on Wed Feb 16 09:14:08 CET 2022.
 
 package primitive
 
@@ -154,6 +154,11 @@ func (o *Boolean) Add(items ...Primitive) *Boolean {
 	return o
 }
 
+func (o *Color) Add(items ...Primitive) *Color {
+	o.Items.Add(items...)
+	return o
+}
+
 func (o *Cylinder) SetFa(val float64) *Cylinder {
 	o.Circular.SetFa(val)
 	return o
@@ -245,6 +250,30 @@ func (o *Boolean) Transparent() Primitive {
 }
 
 func (o *Boolean) Prefix() string {
+	return o.prefix
+}
+
+func (o *Color) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Color) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Color) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Color) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Color) Prefix() string {
 	return o.prefix
 }
 
