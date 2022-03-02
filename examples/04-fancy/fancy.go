@@ -46,7 +46,7 @@ func newMinkowski() Primitive {
 
 func main() {
 	sys.SetFn(360)
-	sys.RenderAndExit(NewList(
+	sys.RenderOne(NewList(
 		newColor(),
 		newOffset(),
 		newMinkowski(),

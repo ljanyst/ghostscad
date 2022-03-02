@@ -92,5 +92,5 @@ func buildShapes() Primitive {
 
 func main() {
 	sys.SetFn(360)
-	sys.RenderAndExit(buildShapes())
+	sys.RenderOne(buildShapes())
 }

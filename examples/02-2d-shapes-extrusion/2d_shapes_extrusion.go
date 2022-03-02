@@ -83,7 +83,7 @@ func newText() Primitive {
 
 func main() {
 	sys.SetFn(360)
-	sys.RenderAndExit(NewList(
+	sys.RenderOne(NewList(
 		newSerpentine(),
 		newRotation(),
 		newComplexPolygon(),

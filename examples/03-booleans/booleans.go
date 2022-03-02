@@ -41,7 +41,7 @@ func newDifference() Primitive {
 
 func main() {
 	sys.SetFn(360)
-	sys.RenderAndExit(NewList(
+	sys.RenderOne(NewList(
 		newIntersection(),
 		newUnion(),
 		newDifference(),

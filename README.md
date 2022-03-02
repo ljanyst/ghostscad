@@ -7,6 +7,8 @@ using [Go][golang] and compile them to the [OpenSCAD][openscad] language. It
 allows you to use the full power of a real programming language and still use
 the rendering capabilities of OpenSCAD.
 
+Requires GO 1.17.
+
 Example
 -------
 
@@ -24,7 +26,7 @@ import (
 )
 
 func main() {
-	sys.RenderAndExit(Sphere(10))
+	sys.RenderOne(Sphere(10))
 }
 ```
 
