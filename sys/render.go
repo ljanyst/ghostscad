@@ -22,6 +22,7 @@ var (
 	listShapes = flag.Bool("list-shapes", false, "list the available shapes")
 	shapeSel   = flag.String("shape", "", "shape to render if not default")
 	stl        = flag.Bool("stl", false, "produce an STL file")
+	all        = flag.Bool("all", false, "procrss all shapes")
 )
 
 func init() {
@@ -122,14 +123,23 @@ func RenderMultiple(shapes map[string]Primitive, dflt string) {
 		return
 	}
 
-	shapeName := *shapeSel
-	if shapeName == "" {
-		shapeName = dflt
-	}
+	if *all {
+		for shapeName, shape := range shapes {
+			fileName := computeOutputName(shapeName)
+			log.Infof("Processing %s...", fileName)
+			render(shape, fileName)
+		}
+		log.Info("Done")
+	} else {
+		shapeName := *shapeSel
+		if shapeName == "" {
+			shapeName = dflt
+		}
 
-	shape, ok := shapes[shapeName]
-	if !ok {
-		log.Fatal("No such shape: %q\n", shapeName)
+		shape, ok := shapes[shapeName]
+		if !ok {
+			log.Fatal("No such shape: %q\n", shapeName)
+		}
+		render(shape, computeOutputName(shapeName))
 	}
-	render(shape, computeOutputName(shapeName))
 }
