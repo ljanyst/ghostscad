@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Wed Feb 16 11:06:38 CET 2022.
+// Do not edit. Automatically generated on Thu Mar  3 18:27:54 CET 2022.
 
 package primitive
 
@@ -247,6 +247,30 @@ func (o *Sphere) SetFn(val uint16) *Sphere {
 func (o *Transform) Add(items ...Primitive) *Transform {
 	o.Items.Add(items...)
 	return o
+}
+
+func (o *Anchor) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Anchor) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Anchor) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Anchor) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Anchor) Prefix() string {
+	return o.prefix
 }
 
 func (o *Color) Disable() Primitive {
