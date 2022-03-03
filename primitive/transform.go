@@ -61,6 +61,22 @@ func NewRotationByAxis(angle float64, vector Vec3, items ...Primitive) *Transfor
 	return ret
 }
 
+func (o *Transform) Inverse() *Transform {
+	ret := &Transform{
+		Items:      NewList(),
+		transforms: make([]transformElement, len(o.transforms)),
+	}
+	ret.Items.SetParent(ret)
+
+	copy(ret.transforms, o.transforms)
+
+	for i, j := 0, len(ret.transforms)-1; i < j; i, j = i+1, j-1 {
+		ret.transforms[i], ret.transforms[j] = ret.transforms[j], ret.transforms[i]
+	}
+
+	return ret
+}
+
 func (o *Transform) Render(w *bufio.Writer) {
 	w.WriteString(o.Prefix())
 	for _, tf := range o.transforms {
