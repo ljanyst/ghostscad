@@ -85,6 +85,10 @@ func (o *Transform) Inverse() *Transform {
 	return ret
 }
 
+func (o *Transform) Append(t *Transform) {
+	o.transforms = append(o.transforms, t.transforms...)
+}
+
 func (o *Transform) Render(w *bufio.Writer) {
 	w.WriteString(o.Prefix())
 	for _, tf := range o.transforms {
