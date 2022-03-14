@@ -70,6 +70,14 @@ func (o *Transform) Inverse() *Transform {
 
 	copy(ret.transforms, o.transforms)
 
+	for i := 0; i < len(ret.transforms); i++ {
+		if ret.transforms[i].name == "translate" {
+			ret.transforms[i].vector = ret.transforms[i].vector.Mul(-1)
+		} else {
+			ret.transforms[i].angle = ret.transforms[i].angle.Mul(-1)
+		}
+	}
+
 	for i, j := 0, len(ret.transforms)-1; i < j; i, j = i+1, j-1 {
 		ret.transforms[i], ret.transforms[j] = ret.transforms[j], ret.transforms[i]
 	}
