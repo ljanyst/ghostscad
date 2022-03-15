@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Tue Mar 15 15:59:15 CET 2022.
+// Do not edit. Automatically generated on Tue Mar 15 17:11:32 CET 2022.
 
 package shapes
 
@@ -10,6 +10,11 @@ func (o *Arc) SetWidth(val float64) *Arc {
 }
 
 func (o *Arc) SetFn(val uint16) *Arc {
+	o.Fn = val
+	return o
+}
+
+func (o *Bezier) SetFn(val uint16) *Bezier {
 	o.Fn = val
 	return o
 }
