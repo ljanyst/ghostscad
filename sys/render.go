@@ -22,7 +22,7 @@ var (
 	listShapes = flag.Bool("list-shapes", false, "list the available shapes")
 	shapeSel   = flag.String("shape", "", "shape to render if not default")
 	stl        = flag.Bool("stl", false, "produce an STL file")
-	all        = flag.Bool("all", false, "procrss all shapes")
+	all        = flag.Bool("all", false, "process all shapes")
 )
 
 func init() {
