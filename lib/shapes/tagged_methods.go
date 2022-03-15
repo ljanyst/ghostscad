@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Tue Mar 15 11:33:58 CET 2022.
+// Do not edit. Automatically generated on Tue Mar 15 15:59:15 CET 2022.
 
 package shapes
 
@@ -16,6 +16,11 @@ func (o *Arc) SetFn(val uint16) *Arc {
 
 func (o *Polyline) SetRound(val bool) *Polyline {
 	o.Round = val
+	return o
+}
+
+func (o *Polyline3d) SetFn(val uint16) *Polyline3d {
+	o.Fn = val
 	return o
 }
 
