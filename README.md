@@ -30,6 +30,10 @@ func main() {
 }
 ```
 
+You can generate such a minimal program by running:
+
+    go run github.com/ljanyst/ghostscad/util/stub_generator -file-name blah.go
+
 There's a whole bunch of other examples in this code repository. The author
 leaves it as an exercise to the reader to find them. :)
 
@@ -57,7 +61,7 @@ You can then bind it to a key combination in your `go-mode` hook like this:
 ```
 
 After you set this up, hitting "CTRL-C CTRL-R" compbination runs the code in the
-current go buffer and overwrites the `out.scad` file with the most recent
+current go buffer and overwrites the `main.scad` file with the most recent
 version of your model. If you have OpenSCAD rendering this file, it will redraw
 your model automagically.
 
