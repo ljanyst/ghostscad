@@ -2,10 +2,10 @@
 GhostSCAD
 =========
 
-GhostSCAD is a piece of software that makes it easy to create CAD models in
-using [Go][golang] and compile them to the [OpenSCAD][openscad] language. It
-allows you to use the full power of a real programming language and still use
-the rendering capabilities of OpenSCAD.
+GhostSCAD is a piece of software that makes it easy to create CAD models using
+[Go][golang] and compile them to the [OpenSCAD][openscad] language. It allows
+you to use the full power of a real programming language and use the rendering
+capabilities of OpenSCAD.
 
 Requires GO 1.17.
 
@@ -14,7 +14,7 @@ Example
 
 GhostSCAD aims to minimize the boilerplate but, since it uses a general purpose
 programming language, there is still some. Here's an example rendering a sphere
-of radius 10 and producing the appropriate OpenSCAD model in the `out.scad`
+of radius 10 and producing the appropriate OpenSCAD model in the `main.scad`
 file:
 
 ```golang
@@ -33,6 +33,52 @@ func main() {
 You can generate such a minimal program by running:
 
     go run github.com/ljanyst/ghostscad/util/stub_generator -file-name blah.go
+
+Here's a slightly more elaborate example:
+
+```golang
+package main
+
+import (
+	"github.com/ljanyst/ghostscad/lib/shapes"
+	"github.com/ljanyst/ghostscad/sys"
+
+	. "github.com/ljanyst/ghostscad/primitive"
+)
+
+func main() {
+	sector := shapes.NewSector(20, 45, 135).SetFn(72).Build()
+	arc := shapes.NewArc(25, 45, 290).SetWidth(2).SetFn(72).Build()
+	sys.RenderMultiple(map[string]Primitive{
+		"sector":         sector,
+		"arc":            arc,
+		"sector-and-arc": NewList(sector, arc),
+	}, "sector-and-arc")
+}
+```
+
+It imports the complex shape library provided with GhostSCAD and renders
+multiple shapes. The first parameter to `sys.RenderMultiple` is a map of shape
+names to shape primitives, while the second one is the name of the default
+shape. This default shape is the one being rendered to `sector-and-arc.scad`
+unless the program is instructed otherwise via commandline parameters. You can
+list the available shapes:
+
+    ]==> go build
+    ]==> ./sector-and-arc -list-shapes
+    sector
+    arc
+    sector-and-arc (default)
+
+You can render the one you like:
+
+    ]==> ./sector-and-arc -shape arc
+    ]==> ls arc.scad
+    arc.scad
+
+You can also generate the STL file directly (if it were a 3D shape) by supplying
+the `-stl` parameter. Use the familiar `-help` to see all the available
+parameters.
 
 There's a whole bunch of other examples in this code repository. The author
 leaves it as an exercise to the reader to find them. :)
