@@ -44,14 +44,19 @@ func (o *Graph) Build() Primitive {
 		return indUp(i, j) + float64(lenArr)
 	}
 
+	f := func(x, y float64) Vec3 {
+		val := o.Func(x, y)
+		return Vec3{x, y, val}
+	}
+	offset := Vec3{0, 0, 0.5 * o.Thickness}
+
 	for i := 0; i < itersX; i++ {
 		for j := 0; j < itersY; j++ {
 			x := o.RangeX[0] + float64(i)*o.Resolution[0]
 			y := o.RangeY[0] + float64(j)*o.Resolution[1]
-			offset := 0.5 * o.Thickness
-			val := o.Func(x, y)
-			pointsUp = append(pointsUp, Vec3{x, y, val + offset})
-			pointsDown = append(pointsDown, Vec3{x, y, val - offset})
+			pt := f(x, y)
+			pointsUp = append(pointsUp, pt.Add(offset))
+			pointsDown = append(pointsDown, pt.Sub(offset))
 
 			if i > 0 && j > 0 {
 				faces = append(faces,
