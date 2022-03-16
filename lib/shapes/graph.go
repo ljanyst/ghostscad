@@ -11,6 +11,7 @@ import (
 type Graph struct {
 	Primitive  Primitive
 	Func       func(float64, float64) float64
+	FuncT      func(float64, float64) Vec3
 	RangeX     Vec2
 	RangeY     Vec2
 	Resolution Vec2
@@ -18,12 +19,24 @@ type Graph struct {
 	Convexity  int     "optional"
 }
 
+// Graph a function parametrized with x and y
 func NewGraph(f func(float64, float64) float64, rangeX, rangeY, resolution Vec2) *Graph {
 	return &Graph{
 		Func:       f,
 		RangeX:     rangeX,
 		RangeY:     rangeY,
 		Resolution: resolution,
+		Thickness:  1,
+	}
+}
+
+// Graps a function parametrized with tx and ty
+func NewGraphT(f func(float64, float64) Vec3, resolution float64) *Graph {
+	return &Graph{
+		FuncT:      f,
+		RangeX:     Vec2{0, 1},
+		RangeY:     Vec2{0, 1},
+		Resolution: Vec2{resolution, resolution},
 		Thickness:  1,
 	}
 }
@@ -44,10 +57,16 @@ func (o *Graph) Build() Primitive {
 		return indUp(i, j) + float64(lenArr)
 	}
 
-	f := func(x, y float64) Vec3 {
-		val := o.Func(x, y)
-		return Vec3{x, y, val}
+	var f func(x, y float64) Vec3
+	if o.Func != nil {
+		f = func(x, y float64) Vec3 {
+			val := o.Func(x, y)
+			return Vec3{x, y, val}
+		}
+	} else {
+		f = o.FuncT
 	}
+
 	offset := Vec3{0, 0, 0.5 * o.Thickness}
 
 	for i := 0; i < itersX; i++ {
