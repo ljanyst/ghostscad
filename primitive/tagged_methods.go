@@ -1,4 +1,4 @@
-// Do not edit. Automatically generated on Thu Mar  3 18:27:54 CET 2022.
+// Do not edit. Automatically generated on Thu Mar 24 17:31:16 CET 2022.
 
 package primitive
 
@@ -462,6 +462,30 @@ func (o *ListOp) Transparent() Primitive {
 }
 
 func (o *ListOp) Prefix() string {
+	return o.prefix
+}
+
+func (o *Nothing) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Nothing) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Nothing) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Nothing) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Nothing) Prefix() string {
 	return o.prefix
 }
 
