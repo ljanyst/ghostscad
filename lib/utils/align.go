@@ -19,3 +19,8 @@ func Align(a *Anchor, b *Anchor) *Transform {
 func AlignOrigin(a *Anchor) *Transform {
 	return a.Transform()
 }
+
+// Returns a transform aligning Anchor a with origin
+func AlignHere(a *Anchor) *Transform {
+	return a.Transform().Inverse()
+}
