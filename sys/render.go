@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 
 	. "github.com/ljanyst/ghostscad/primitive"
 	log "github.com/sirupsen/logrus"
@@ -55,6 +56,22 @@ func init() {
 	log.SetLevel(level)
 }
 
+//go:generate go run golang.org/x/tools/cmd/stringer -type ShapeFlags render.go
+
+type ShapeFlags uint32
+
+const (
+	None    ShapeFlags = 0
+	Default ShapeFlags = 1 << iota
+	SkipInBulk
+)
+
+type Shape struct {
+	Name      string
+	Primitive Primitive
+	Flags     ShapeFlags
+}
+
 func computeOutputName(shapeName string) string {
 	if *out != "" {
 		return *out
@@ -98,6 +115,34 @@ func render(shape Primitive, fileName string) {
 	}
 }
 
+func flagsToString(flags ShapeFlags) string {
+	if flags == None {
+		return ""
+	}
+
+	b := strings.Builder{}
+	b.WriteString(" ")
+	f := Default
+	prev := false
+
+	for i := 0; i < 32; i++ {
+		if (flags & (f << i)) != 0 {
+			if !prev {
+				b.WriteString("(")
+				prev = true
+			} else {
+				b.WriteString(", ")
+			}
+			b.WriteString((f << i).String())
+		}
+	}
+
+	if prev {
+		b.WriteString(")")
+	}
+	return b.String()
+}
+
 func RenderOne(shape Primitive) {
 	if *listShapes {
 		fmt.Println("main (default)")
@@ -105,29 +150,48 @@ func RenderOne(shape Primitive) {
 	}
 
 	if *shapeSel != "" && *shapeSel != "main" {
-		log.Fatal("No such shape: %q\n", *shapeSel)
+		log.Fatalf("No such shape: %q\n", *shapeSel)
 	}
 
 	render(shape, computeOutputName("main"))
 }
 
-func RenderMultiple(shapes map[string]Primitive, dflt string) {
-	if *listShapes {
-		for shape, _ := range shapes {
-			fmt.Printf("%s", shape)
-			if shape == dflt {
-				fmt.Printf(" (default)")
-			}
-			fmt.Printf("\n")
+func RenderMultiple(shapes []Shape) {
+	if len(shapes) == 0 {
+		log.Fatal("No defined shapes\n")
+	}
+
+	shapeMap := make(map[string]Shape)
+	dflt := ""
+
+	for _, shape := range shapes {
+		shapeMap[shape.Name] = shape
+
+		if *listShapes {
+			fmt.Printf("%s", shape.Name)
+			fmt.Printf("%s\n", flagsToString(shape.Flags))
 		}
+
+		if (shape.Flags&Default) != 0 && dflt == "" {
+			dflt = shape.Name
+		}
+	}
+
+	if *listShapes {
 		return
 	}
 
+	if dflt == "" {
+		log.Fatalf("Default shape not specifid. There needs to be one.\n")
+	}
+
 	if *all {
-		for shapeName, shape := range shapes {
-			fileName := computeOutputName(shapeName)
-			log.Infof("Processing %s...", fileName)
-			render(shape, fileName)
+		for _, shape := range shapes {
+			if (shape.Flags & SkipInBulk) == 0 {
+				fileName := computeOutputName(shape.Name)
+				log.Infof("Processing %s...", fileName)
+				render(shape.Primitive, fileName)
+			}
 		}
 		log.Info("Done")
 	} else {
@@ -136,10 +200,10 @@ func RenderMultiple(shapes map[string]Primitive, dflt string) {
 			shapeName = dflt
 		}
 
-		shape, ok := shapes[shapeName]
+		shape, ok := shapeMap[shapeName]
 		if !ok {
-			log.Fatal("No such shape: %q\n", shapeName)
+			log.Fatalf("No such shape: %q\n", shapeName)
 		}
-		render(shape, computeOutputName(shapeName))
+		render(shape.Primitive, computeOutputName(shapeName))
 	}
 }
