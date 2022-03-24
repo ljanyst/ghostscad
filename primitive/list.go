@@ -7,6 +7,7 @@ import (
 	"bufio"
 )
 
+// List groups operations. It renders curly brackets in the SCAD file.
 type List struct {
 	ParentImpl
 	Items  []Primitive

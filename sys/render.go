@@ -61,8 +61,14 @@ func init() {
 type ShapeFlags uint32
 
 const (
-	None    ShapeFlags = 0
+	// No special treatment
+	None ShapeFlags = 0
+
+	// This is the default shape. The first encountered default shape will be
+	// treated as such
 	Default ShapeFlags = 1 << iota
+
+	// Skip this shape when processing the shapes in bulk (the -all option)
 	SkipInBulk
 )
 
@@ -143,6 +149,7 @@ func flagsToString(flags ShapeFlags) string {
 	return b.String()
 }
 
+// Render a single shape in a way depending on commandline parameters
 func RenderOne(shape Primitive) {
 	if *listShapes {
 		fmt.Println("main (default)")
@@ -156,6 +163,7 @@ func RenderOne(shape Primitive) {
 	render(shape, computeOutputName("main"))
 }
 
+// Render the shapes from the list in a way depending on commandline parameters
 func RenderMultiple(shapes []Shape) {
 	if len(shapes) == 0 {
 		log.Fatal("No defined shapes\n")

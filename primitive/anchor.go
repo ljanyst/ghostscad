@@ -7,6 +7,9 @@ import (
 	"bufio"
 )
 
+// Anchor enables easy tracking of transforms and enables the alignment
+// of reference frames. This is useful when you need to create or use complex
+// objects that need to be put together in complex ways.
 type Anchor struct {
 	ParentImpl
 	prefix string "prefix"

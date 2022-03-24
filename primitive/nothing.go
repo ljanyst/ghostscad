@@ -7,6 +7,7 @@ import (
 	"bufio"
 )
 
+// Nothing is a NULL node. It renders a comment in the SCAD file.
 type Nothing struct {
 	ParentImpl
 	prefix string "prefix"

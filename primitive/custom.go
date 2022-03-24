@@ -7,6 +7,7 @@ import (
 	"bufio"
 )
 
+// Custom allows you to render arbitrary code in the filal SCAD file.
 type Custom struct {
 	ParentImpl
 	Code   string
