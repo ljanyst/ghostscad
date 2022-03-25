@@ -7,15 +7,21 @@ GhostSCAD is a piece of software that makes it easy to create CAD models using
 you to use the full power of a real programming language and use the rendering
 capabilities of OpenSCAD.
 
-Requires GO 1.17.
+It requires GO 1.17.
 
 Example
 -------
 
 GhostSCAD aims to minimize the boilerplate but, since it uses a general purpose
-programming language, there is still some. Here's an example rendering a sphere
-of radius 10 and producing the appropriate OpenSCAD model in the `main.scad`
-file:
+programming language, there is still some. First, you need to create a Go module
+for your project and add GhostSCAD to it:
+
+    mkdir design; cd design
+    go mod init example.com/design
+    go get github.com/ljanyst/ghostscad
+
+Here's an example rendering a sphere of radius 10 and producing the appropriate
+OpenSCAD model in the `main.scad` file:
 
 ```golang
 package main
@@ -58,9 +64,8 @@ func main() {
 ```
 
 It imports the complex shape library provided with GhostSCAD and renders
-multiple shapes. The first parameter to `sys.RenderMultiple` is a map of shape
-names to shape primitives, while the second one is the name of the default
-shape. This default shape is the one being rendered to `sector-and-arc.scad`
+multiple shapes. The parameter to `sys.RenderMultiple` is a slice of Shape
+object. The default shape is the one being rendered to `sector-and-arc.scad`
 unless the program is instructed otherwise via commandline parameters. You can
 list the available shapes:
 
