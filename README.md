@@ -9,6 +9,8 @@ capabilities of OpenSCAD.
 
 It requires GO 1.17.
 
+![Screenshot](screenshot.png)
+
 Example
 -------
 
