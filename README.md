@@ -11,6 +11,9 @@ It requires GO 1.17.
 
 ![Screenshot](screenshot.png)
 
+See the blog post explaining the motivations [here][bp] and a real-life example
+[here][rack].
+
 Example
 -------
 
@@ -123,3 +126,5 @@ Happy hacking!
 [golang]: https://golang.org/
 [openscad]: https://openscad.org/
 [emacs]: https://www.gnu.org/software/emacs/
+[bp]: https://jany.st/post/2022-04-04-ghostscad-marying-openscad-and-golang.html
+[rack]: https://github.com/ljanyst/tv-table-rack
