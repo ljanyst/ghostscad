@@ -8,13 +8,6 @@ import (
 	. "github.com/ljanyst/ghostscad/primitive"
 )
 
-func newLine3d(p1, p2 Vec3, thickness float64, fn uint16) Primitive {
-	return NewHull(
-		NewTranslation(p1, NewSphere(thickness/2).SetFn(fn)),
-		NewTranslation(p2, NewSphere(thickness/2).SetFn(fn)),
-	)
-}
-
 type Polyline3d struct {
 	Primitive Primitive
 	Points    []Vec3
@@ -31,9 +24,16 @@ func NewPolyline3d(points []Vec3, thickness float64) *Polyline3d {
 }
 
 func (o *Polyline3d) Build() Primitive {
+	line := func(p1, p2 Vec3, thickness float64, fn uint16) Primitive {
+		return NewHull(
+			NewTranslation(p1, NewSphere(thickness/2).SetFn(fn)),
+			NewTranslation(p2, NewSphere(thickness/2).SetFn(fn)),
+		)
+	}
+
 	segs := NewList()
 	for i := 1; i < len(o.Points); i++ {
-		segs.Add(newLine3d(o.Points[i-1], o.Points[i], o.Thickness, o.Fn))
+		segs.Add(line(o.Points[i-1], o.Points[i], o.Thickness, o.Fn))
 	}
 
 	o.Primitive = segs
