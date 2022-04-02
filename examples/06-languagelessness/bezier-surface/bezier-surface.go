@@ -7,7 +7,7 @@ import (
 	. "github.com/go-gl/mathgl/mgl64"
 )
 
-func bazierSurface(ctrlPoints [][]Vec3, rangeX Vec2, rangeY Vec2) func(float64, float64) Vec3 {
+func bezierSurface(ctrlPoints [][]Vec3, rangeX Vec2, rangeY Vec2) func(float64, float64) Vec3 {
 	// We could to some memoization here, but the purpose of this code is to demonstrate
 	// a usecase, so we value clarity and don't care much abount recomputing tha same values
 	// over and over again
@@ -29,6 +29,6 @@ func main() {
 	}
 	rangeX := Vec2{0, 200}
 	rangeY := Vec2{0, 150}
-	f := bazierSurface(ctrlPoints, rangeX, rangeY)
+	f := bezierSurface(ctrlPoints, rangeX, rangeY)
 	sys.RenderOne(shapes.NewGraphT(f, 0.02).Build())
 }
