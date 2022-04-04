@@ -126,5 +126,5 @@ Happy hacking!
 [golang]: https://golang.org/
 [openscad]: https://openscad.org/
 [emacs]: https://www.gnu.org/software/emacs/
-[bp]: https://jany.st/post/2022-04-04-ghostscad-marying-openscad-and-golang.html
+[bp]: https://jany.st/post/2022-04-04-ghostscad-marrying-openscad-and-golang.html
 [rack]: https://github.com/ljanyst/tv-table-rack
