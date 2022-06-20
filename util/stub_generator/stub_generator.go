@@ -22,6 +22,7 @@ import (
 )
 
 func main() {
+        sys.Initialize()
         sys.SetFn(120)
         sys.RenderOne(NewSphere(10))
 }
