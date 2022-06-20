@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	sys.Initialize()
 	sys.SetFn(120)
 	ring1 := shapes.NewRing(20, 5).SetStartAngle(30).SetRingAngle(90)
 	ring1.Build()

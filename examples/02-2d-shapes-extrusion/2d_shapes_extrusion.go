@@ -82,6 +82,7 @@ func newText() Primitive {
 }
 
 func main() {
+	sys.Initialize()
 	sys.SetFn(360)
 	sys.RenderOne(NewList(
 		newSerpentine(),

@@ -10,6 +10,8 @@ import (
 )
 
 func main() {
+	sys.Initialize()
+
 	r := 50.0
 	points := []Vec3{}
 	for a := 0.0; a <= 180; a++ {
