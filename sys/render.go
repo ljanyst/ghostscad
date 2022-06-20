@@ -17,16 +17,24 @@ import (
 )
 
 var (
-	out        = flag.String("out", "", "output file")
-	logFile    = flag.String("log-file", "", "output file for diagnostics")
-	logLevel   = flag.String("log-level", "Info", "verbosity of the diagnostic information")
-	listShapes = flag.Bool("list-shapes", false, "list the available shapes")
-	shapeSel   = flag.String("shape", "", "shape to render if not default")
-	stl        = flag.Bool("stl", false, "produce an STL file")
-	all        = flag.Bool("all", false, "process all shapes")
+	out         = flag.String("out", "", "output file")
+	logFile     = flag.String("log-file", "", "output file for diagnostics")
+	logLevel    = flag.String("log-level", "Info", "verbosity of the diagnostic information")
+	listShapes  = flag.Bool("list-shapes", false, "list the available shapes")
+	shapeSel    = flag.String("shape", "", "shape to render if not default")
+	stl         = flag.Bool("stl", false, "produce an STL file")
+	all         = flag.Bool("all", false, "process all shapes")
+	initialized = false
 )
 
-func init() {
+// Parse command-line flags and initialize the logging system
+func Initialize() {
+	if initialized {
+		return
+	} else {
+		initialized = true
+	}
+
 	flag.Parse()
 
 	// Set up logging
@@ -151,6 +159,8 @@ func flagsToString(flags ShapeFlags) string {
 
 // Render a single shape in a way depending on commandline parameters
 func RenderOne(shape Primitive) {
+	Initialize()
+
 	if *listShapes {
 		fmt.Println("main (default)")
 		return
@@ -165,6 +175,8 @@ func RenderOne(shape Primitive) {
 
 // Render the shapes from the list in a way depending on commandline parameters
 func RenderMultiple(shapes []Shape) {
+	Initialize()
+
 	if len(shapes) == 0 {
 		log.Fatal("No defined shapes\n")
 	}
