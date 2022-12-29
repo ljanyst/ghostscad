@@ -202,7 +202,7 @@ func RenderMultiple(shapes []Shape) {
 	}
 
 	if dflt == "" {
-		log.Fatalf("Default shape not specifid. There needs to be one.\n")
+		log.Fatalf("Default shape not specified. There needs to be one.\n")
 	}
 
 	if *all {
