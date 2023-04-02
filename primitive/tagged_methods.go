@@ -633,6 +633,30 @@ func (o *Scale) Prefix() string {
 	return o.prefix
 }
 
+func (o *Mirror) Disable() Primitive {
+	o.prefix = "*"
+	return o
+}
+
+func (o *Mirror) ShowOnly() Primitive {
+	o.prefix = "!"
+	return o
+}
+
+func (o *Mirror) Highlight() Primitive {
+	o.prefix = "#"
+	return o
+}
+
+func (o *Mirror) Transparent() Primitive {
+	o.prefix = "%"
+	return o
+}
+
+func (o *Mirror) Prefix() string {
+	return o.prefix
+}
+
 func (o *Sphere) Disable() Primitive {
 	o.prefix = "*"
 	return o
